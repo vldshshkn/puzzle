@@ -38,6 +38,8 @@
   <p id="message" style="font-size:18px; margin-top:20px;"></p>
 
   <script>
+    console.log("🧩 Скрипт загружен");
+
     const puzzle = document.getElementById('puzzle');
     const positions = [];
 
@@ -80,8 +82,10 @@
     function checkWin() {
       const pieces = Array.from(document.querySelectorAll('.piece'));
       const correct = pieces.every((p, i) => parseInt(p.getAttribute('data-index')) === i);
+      console.log("Проверка: ", correct);
       if (correct) {
         document.getElementById('message').innerText = '🎉 Готово!';
+        console.log("🎉 Пазл собран! Перенаправляем через 2 секунды...");
         setTimeout(() => {
           window.location.href = 'https://lera-birthday.tilda.ws/win';
         }, 2000);
