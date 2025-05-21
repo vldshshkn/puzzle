@@ -4,131 +4,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Финальный Пазл</title>
+  <title>🎉 Финальный Пазл</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffd6ec, #c4e0ff);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #fcd6f6, #d6e4ff);
-      animation: gradientShift 10s ease infinite;
-    }
-
-    @keyframes gradientShift {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+      text-align: center;
     }
 
     h1 {
-      color: #e60073;
-      font-size: 2.5em;
-      margin-bottom: 0.2em;
+      font-size: 32px;
+      margin: 10px;
+      color: #ff4e9b;
     }
 
-    p {
-      font-size: 1.2em;
-      color: #333;
-      margin-bottom: 1.5em;
+    h2 {
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 30px;
+      color: #444;
+      max-width: 90%;
     }
 
     #puzzle {
-      display: grid;
-      grid-template-columns: repeat(4, 100px);
-      grid-template-rows: repeat(4, 100px);
-      gap: 3px;
-      border: 3px solid #ff70a6;
-      background-color: #fff;
-      padding: 3px;
-      border-radius: 16px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.1);
+      width: 400px;
+      height: 400px;
+      display: flex;
+      flex-wrap: wrap;
+      border: 4px solid #ff7ecb;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      background: #fff;
+      border-radius: 12px;
     }
 
-    .piece {
+    .tile {
       width: 100px;
       height: 100px;
-      background-image: url('dog_puzzle.jpg');
+      background-image: url("dog_focused_puzzle.jpg");
       background-size: 400px 400px;
+      position: absolute;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.3s ease;
+      border-radius: 6px;
     }
 
-    .piece:hover {
-      transform: scale(1.05);
+    @media (max-width: 480px) {
+      #puzzle {
+        transform: scale(0.9);
+      }
+      h1 {
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 16px;
+      }
     }
-
   </style>
 </head>
 <body>
   <h1>Ты молодец! 🎉</h1>
-  <p>Ты прошла 3 раунда. Остался последний шаг…<br>Собери пазл — и получишь подарок 🎁</p>
+  <h2>Ты прошла 3 раунда. Остался последний шаг…<br/>Собери пазл — и получишь подарок 🎁</h2>
   <div id="puzzle"></div>
 
   <script>
-    const puzzle = document.getElementById('puzzle');
-    const size = 4;
+    const puzzle = document.getElementById("puzzle");
     const positions = [];
 
-    for (let y = 0; y < size; y++) {
-      for (let x = 0; x < size; x++) {
-        positions.push({ x, y });
+    for (let y = 0; y < 4; y++) {
+      for (let x = 0; x < 4; x++) {
+        const index = y * 4 + x;
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.dataset.index = index;
+        tile.style.backgroundPosition = `-${x * 100}px -${y * 100}px`;
+        positions.push({x: x * 100, y: y * 100});
+        puzzle.appendChild(tile);
       }
     }
 
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1)];
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    const shuffled = shuffle([...positions]);
-
-    shuffled.forEach((pos, index) => {
-      const div = document.createElement('div');
-      div.className = 'piece';
-      div.style.backgroundPosition = `-${pos.x * 100}px -${pos.y * 100}px`;
-      div.dataset.index = index;
-      puzzle.appendChild(div);
+    const tiles = [...document.querySelectorAll(".tile")];
+    const shuffled = [...positions].sort(() => Math.random() - 0.5);
+    tiles.forEach((tile, i) => {
+      const pos = shuffled[i];
+      tile.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+      tile.dataset.x = pos.x;
+      tile.dataset.y = pos.y;
     });
 
     let selected = null;
-    puzzle.addEventListener('click', function (e) {
-      const target = e.target;
-      if (!target.classList.contains('piece')) return;
 
-      if (selected) {
-        const tempStyle = selected.style.backgroundPosition;
-        selected.style.backgroundPosition = target.style.backgroundPosition;
-        target.style.backgroundPosition = tempStyle;
-        selected = null;
-        checkWin();
-      } else {
-        selected = target;
-      }
+    tiles.forEach(tile => {
+      tile.addEventListener("click", () => {
+        if (!selected) {
+          selected = tile;
+          tile.style.outline = "3px solid #ff4e9b";
+        } else if (selected === tile) {
+          tile.style.outline = "none";
+          selected = null;
+        } else {
+          const x1 = selected.dataset.x, y1 = selected.dataset.y;
+          const x2 = tile.dataset.x, y2 = tile.dataset.y;
+
+          selected.style.transform = `translate(${x2}px, ${y2}px)`;
+          tile.style.transform = `translate(${x1}px, ${y1}px)`;
+
+          selected.dataset.x = x2; selected.dataset.y = y2;
+          tile.dataset.x = x1; tile.dataset.y = y1;
+
+          selected.style.outline = "none";
+          selected = null;
+
+          setTimeout(checkWin, 300);
+        }
+      });
     });
 
     function checkWin() {
-      const pieces = document.querySelectorAll('.piece');
-      let isCorrect = true;
-      pieces.forEach((piece, i) => {
-        const correctX = (i % size) * -100;
-        const correctY = Math.floor(i / size) * -100;
-        const current = piece.style.backgroundPosition.split(" ");
-        const curX = parseInt(current[0]);
-        const curY = parseInt(current[1]);
-        if (curX !== correctX || curY !== correctY) {
-          isCorrect = false;
+      let isWin = true;
+      tiles.forEach(tile => {
+        const index = parseInt(tile.dataset.index);
+        const correctX = (index % 4) * 100;
+        const correctY = Math.floor(index / 4) * 100;
+        const currentX = parseInt(tile.dataset.x);
+        const currentY = parseInt(tile.dataset.y);
+        if (currentX !== correctX || currentY !== correctY) {
+          isWin = false;
         }
       });
 
-      if (isCorrect) {
-        window.location.href = "https://lera-birthday.tilda.ws/final";
+      if (isWin) {
+        setTimeout(() => {
+          window.location.href = "https://lera-birthday.tilda.ws/win";
+        }, 1000);
       }
     }
   </script>
