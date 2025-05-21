@@ -3,7 +3,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Пазл</title>
+  <title>Пазл отладка</title>
   <style>
     body {
       background: #fff0f6;
@@ -33,11 +33,13 @@
   </style>
 </head>
 <body>
-  <h2>🧩 Собери пазл!</h2>
+  <h2>🧩 Собери пазл — ОТЛАДКА</h2>
   <div id="puzzle"></div>
   <p id="message" style="font-size:18px; margin-top:20px;"></p>
 
   <script>
+    console.log("🧪 Скрипт отладки загружен");
+
     const puzzle = document.getElementById('puzzle');
     const positions = [];
 
@@ -80,13 +82,18 @@
     function checkWin() {
       const pieces = Array.from(document.querySelectorAll('.piece'));
       let isCorrect = true;
+
       pieces.forEach((p, i) => {
         const correctX = i % 4;
         const correctY = Math.floor(i / 4);
         const expectedPos = `-${correctX * 100}px -${correctY * 100}px`;
         const actualPos = p.style.backgroundPosition;
+
         if (actualPos !== expectedPos) {
+          console.log(`❌ Кусок ${i}: ОЖИДАЛОСЬ: ${expectedPos}, А ЕСТЬ: ${actualPos}`);
           isCorrect = false;
+        } else {
+          console.log(`✅ Кусок ${i}: ${actualPos}`);
         }
       });
 
@@ -94,7 +101,7 @@
 
       if (isCorrect) {
         document.getElementById('message').innerText = '🎉 Готово!';
-        console.log("🎉 Пазл собран! Переход через 2 секунды...");
+        console.log("🎉 Пазл собран! Редирект через 2 сек...");
         setTimeout(() => {
           window.location.href = 'https://lera-birthday.tilda.ws/win';
         }, 2000);
