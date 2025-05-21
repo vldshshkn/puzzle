@@ -81,7 +81,10 @@
       const pieces = Array.from(document.querySelectorAll('.piece'));
       const correct = pieces.every((p, i) => parseInt(p.getAttribute('data-index')) === i);
       if (correct) {
-        document.getElementById('message').innerText = '🎉 Пазл собран! Переходи к подарку!';
+        document.getElementById('message').innerText = '🎉 Готово!';
+        setTimeout(() => {
+          window.location.href = 'https://lera-birthday.tilda.ws/win';
+        }, 2000);
       }
     }
   </script>
