@@ -2,111 +2,111 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Пазл отладка</title>
-  <style>
-    body {
-      background: #fff0f6;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: sans-serif;
-    }
-    #puzzle {
-      width: 400px;
-      height: 400px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      gap: 1px;
-      border: 4px solid #ff7ecb;
-      background: #ccc;
-    }
-    .piece {
-      width: 100%;
-      height: 100%;
-      background-image: url('dog_focused_puzzle.jpg');
-      background-size: 400px 400px;
-      cursor: grab;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>🎉 Собери пазл!</title>
+    <style>
+        body {
+            background: #fff0f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+        }
+        h2 {
+            color: #222;
+        }
+        #puzzle {
+            width: 400px;
+            height: 400px;
+            display: flex;
+            flex-wrap: wrap;
+            border: 5px solid hotpink;
+        }
+        .piece {
+            width: 100px;
+            height: 100px;
+            background-image: url("dog_focused_puzzle.jpg");
+            background-size: 400px 400px;
+            box-sizing: border-box;
+            border: 1px solid #fff;
+        }
+    </style>
 </head>
 <body>
-  <h2>🧩 Собери пазл — ОТЛАДКА</h2>
-  <div id="puzzle"></div>
-  <p id="message" style="font-size:18px; margin-top:20px;"></p>
+    <h2>🧩 Собери пазл!</h2>
+    <div id="puzzle"></div>
+    <p id="message" style="font-size:18px; margin-top:20px;"></p>
+    <script>
+        console.log("🧪 Скрипт отладки загружен");
 
-  <script>
-    console.log("🧪 Скрипт отладки загружен");
+        const puzzle = document.getElementById('puzzle');
+        const message = document.getElementById('message');
 
-    const puzzle = document.getElementById('puzzle');
-    const positions = [];
+        let pieces = [];
+        const size = 100;
 
-    for (let i = 0; i < 16; i++) {
-      const x = i % 4;
-      const y = Math.floor(i / 4);
-      positions.push({ x, y });
-    }
-
-    const shuffled = positions.slice().sort(() => Math.random() - 0.5);
-
-    shuffled.forEach((pos) => {
-      const div = document.createElement('div');
-      div.className = 'piece';
-      div.style.backgroundPosition = `-${pos.x * 100}px -${pos.y * 100}px`;
-      div.setAttribute('data-pos', `${pos.x},${pos.y}`);
-      div.setAttribute('draggable', 'true');
-      puzzle.appendChild(div);
-    });
-
-    let dragged;
-
-    puzzle.addEventListener('dragstart', (e) => {
-      dragged = e.target;
-    });
-
-    puzzle.addEventListener('dragover', (e) => {
-      e.preventDefault();
-    });
-
-    puzzle.addEventListener('drop', (e) => {
-      if (e.target.className !== 'piece') return;
-      const temp = document.createElement('div');
-      puzzle.replaceChild(temp, dragged);
-      puzzle.replaceChild(dragged, e.target);
-      puzzle.replaceChild(e.target, temp);
-      checkWin();
-    });
-
-    function checkWin() {
-      const pieces = Array.from(document.querySelectorAll('.piece'));
-      let isCorrect = true;
-
-      pieces.forEach((p, i) => {
-        const correctX = i % 4;
-        const correctY = Math.floor(i / 4);
-        const expectedPos = `-${correctX * 100}px -${correctY * 100}px`;
-        const actualPos = p.style.backgroundPosition;
-
-        if (actualPos !== expectedPos) {
-          console.log(`❌ Кусок ${i}: ОЖИДАЛОСЬ: ${expectedPos}, А ЕСТЬ: ${actualPos}`);
-          isCorrect = false;
-        } else {
-          console.log(`✅ Кусок ${i}: ${actualPos}`);
+        for (let y = 0; y < 4; y++) {
+            for (let x = 0; x < 4; x++) {
+                const div = document.createElement('div');
+                div.className = 'piece';
+                div.dataset.correctX = x * -size;
+                div.dataset.correctY = y * -size;
+                div.style.backgroundPosition = `${x * -size}px ${y * -size}px`;
+                pieces.push(div);
+            }
         }
-      });
 
-      console.log("Проверка: ", isCorrect);
+        // Перемешивание
+        pieces.sort(() => Math.random() - 0.5);
 
-      if (isCorrect) {
-        document.getElementById('message').innerText = '🎉 Готово!';
-        console.log("🎉 Пазл собран! Редирект через 2 сек...");
-        setTimeout(() => {
-          window.location.href = 'https://lera-birthday.tilda.ws/win';
-        }, 2000);
-      }
-    }
-  </script>
+        // Добавление в DOM
+        pieces.forEach(piece => puzzle.appendChild(piece));
+
+        // Смена местами
+        let first = null;
+        puzzle.addEventListener('click', e => {
+            if (!e.target.classList.contains('piece')) return;
+            if (!first) {
+                first = e.target;
+                first.style.outline = "2px solid red";
+            } else {
+                const second = e.target;
+                [first.style.backgroundPosition, second.style.backgroundPosition] =
+                    [second.style.backgroundPosition, first.style.backgroundPosition];
+                first.style.outline = "none";
+                first = null;
+                checkWin();
+            }
+        });
+
+        function parsePosition(pos) {
+            const [x, y] = pos.split(' ').map(v => parseInt(v));
+            return { x, y };
+        }
+
+        function checkWin() {
+            let win = true;
+            [...puzzle.children].forEach((div, i) => {
+                const correctX = parseInt(div.dataset.correctX);
+                const correctY = parseInt(div.dataset.correctY);
+                const { x, y } = parsePosition(div.style.backgroundPosition);
+                if (x !== correctX || y !== correctY) {
+                    console.log(`❌ Кусок ${i}: ОЖИДАЛОСЬ: ${correctX}px ${correctY}px, А ЕСТЬ: ${x}px ${y}px`);
+                    win = false;
+                } else {
+                    console.log(`✅ Кусок ${i}: ${x}px ${y}px`);
+                }
+            });
+
+            console.log("Проверка: ", win);
+            if (win) {
+                message.textContent = "🎉 Молодец!";
+                setTimeout(() => {
+                    window.location.href = "https://lera-birthday.tilda.ws/win";
+                }, 1000);
+            }
+        }
+    </script>
 </body>
 </html>
