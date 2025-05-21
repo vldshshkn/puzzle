@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Пазл</title>
+  <style>
+    body {
+      background: #fff0f6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif;
+    }
+    #puzzle {
+      width: 400px;
+      height: 400px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 1px;
+      border: 4px solid #ff7ecb;
+      background: #ccc;
+    }
+    .piece {
+      width: 100%;
+      height: 100%;
+      background-image: url('dog_focused_puzzle.jpg');
+      background-size: 400px 400px;
+      cursor: grab;
+    }
+  </style>
+</head>
+<body>
+  <h2>🧩 Собери пазл!</h2>
+  <div id="puzzle"></div>
+  <p id="message" style="font-size:18px; margin-top:20px;"></p>
+
+  <script>
+    const puzzle = document.getElementById('puzzle');
+    const positions = [];
+
+    for (let i = 0; i < 16; i++) {
+      const x = i % 4;
+      const y = Math.floor(i / 4);
+      positions.push({ x, y });
+    }
+
+    const shuffled = positions.slice().sort(() => Math.random() - 0.5);
+
+    shuffled.forEach((pos, index) => {
+      const div = document.createElement('div');
+      div.className = 'piece';
+      div.style.backgroundPosition = `-${pos.x * 100}px -${pos.y * 100}px`;
+      div.setAttribute('data-index', index);
+      div.setAttribute('draggable', 'true');
+      puzzle.appendChild(div);
+    });
+
+    let dragged;
+
+    puzzle.addEventListener('dragstart', (e) => {
+      dragged = e.target;
+    });
+
+    puzzle.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+
+    puzzle.addEventListener('drop', (e) => {
+      if (e.target.className !== 'piece') return;
+      const temp = document.createElement('div');
+      puzzle.replaceChild(temp, dragged);
+      puzzle.replaceChild(dragged, e.target);
+      puzzle.replaceChild(e.target, temp);
+      checkWin();
+    });
+
+    function checkWin() {
+      const pieces = Array.from(document.querySelectorAll('.piece'));
+      const correct = pieces.every((p, i) => parseInt(p.getAttribute('data-index')) === i);
+      if (correct) {
+        document.getElementById('message').innerText = '🎉 Пазл собран! Переходи к подарку!';
+      }
+    }
+  </script>
+</body>
+</html>
