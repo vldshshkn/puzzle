@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #ffd6ec, #c4e0ff);
+      background: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed; background-size: cover;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -68,13 +68,30 @@
       }
     }
   
-    body {
-      background: url('https://images.unsplash.com/photo-1526401281623-2aa4a6efda5b?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
-      background-size: cover;
+    #puzzle {
+      border: 6px solid rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+    }
+
+    .tile {
+      transition: transform 0.3s ease, box-shadow 0.2s ease;
+    }
+
+    .tile.jump {
+      animation: jumpy 0.3s ease;
+    }
+
+    @keyframes jumpy {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
     }
 
     h1, h2 {
-      animation: fadeIn 2s ease-out;
+      animation: fadeIn 1.5s ease-out;
     }
 
     @keyframes fadeIn {
@@ -82,22 +99,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    #puzzle {
-      border: 6px solid rgba(255, 255, 255, 0.7);
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-    }
-
-    .tile {
-      transition: transform 0.3s ease, box-shadow 0.2s;
-    }
-
-    .tile:active {
-      transform: scale(1.08);
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.6);
-    }
 </style>
 </head>
 <body onclick="startMusic()">
@@ -160,7 +161,11 @@
           const x2 = tile.dataset.x, y2 = tile.dataset.y;
 
           selected.style.transform = `translate(${x2}px, ${y2}px)`;
+          selected.classList.add('jump');
+          setTimeout(() => selected.classList.remove('jump'), 300);
           tile.style.transform = `translate(${x1}px, ${y1}px)`;
+          tile.classList.add('jump');
+          setTimeout(() => tile.classList.remove('jump'), 300);
 
           selected.dataset.x = x2; selected.dataset.y = y2;
           tile.dataset.x = x1; tile.dataset.y = y1;
