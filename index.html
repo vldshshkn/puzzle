@@ -164,6 +164,11 @@ canvas#stars, canvas#stars2 {
 <body onclick="startMusic()">
   <h1>Ты молодец! 🎉</h1>
   <h2>Ты прошла 3 раунда. Остались ещё задания…<br/>Собери пазл, чтобы двигаться дальше!</h2>
+  
+<audio id="moveSound">
+  <source src="LALA.wav" type="audio/wav">
+</audio>
+
   <div id="puzzle"></div>
 
   <audio id="bgMusic" loop>
@@ -256,11 +261,13 @@ const puzzle = document.getElementById("puzzle");
           selected.style.transform = `translate(${x2}px, ${y2}px)`;
           const rect2 = selected.getBoundingClientRect();
           createSpark(rect2.left + 50, rect2.top + 50);
+          document.getElementById('moveSound').play();
           selected.classList.add('glow');
           setTimeout(() => selected.classList.remove('glow'), 400);
           tile.style.transform = `translate(${x1}px, ${y1}px)`;
           const rect1 = tile.getBoundingClientRect();
           createSpark(rect1.left + 50, rect1.top + 50);
+          document.getElementById('moveSound').play();
           tile.classList.add('glow');
           setTimeout(() => tile.classList.remove('glow'), 400);
 
