@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: url('ksksks.jpeg') no-repeat center center fixed; background-size: cover;
+      background: url('ksksks.png') no-repeat center center fixed; background-size: cover;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -67,10 +67,52 @@
         font-size: 16px;
       }
     }
-  </style>
+  
+    #puzzle {
+      border: 4px solid rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(4px);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+    }
+
+    .tile {
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .tile.spin {
+      animation: spinEffect 0.4s ease-in-out;
+    }
+
+    @keyframes spinEffect {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(5deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    h1 {
+      color: white;
+      text-shadow: 0 0 10px rgba(255,255,255,0.7);
+    }
+
+    h2 {
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 0 6px rgba(0,0,0,0.4);
+    }
+
+    h1, h2 {
+      animation: fadeIn 1.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+</style>
 </head>
 <body onclick="startMusic()">
-  <h1>Ты молодец! 🎉</h1>
+  <h1>✨ Ты молодец! 🎉 ✨</h1>
   <h2>Ты прошла 3 раунда. Остались ещё задания…<br/>Собери пазл, чтобы двигаться дальше!</h2>
   <div id="puzzle"></div>
 
