@@ -395,5 +395,62 @@ function animateSparkles() {
 animateSparkles();
 </script>
 
+
+<canvas id="smoke"></canvas>
+<script>
+const canvasSmoke = document.getElementById("smoke");
+const ctxSmoke = canvasSmoke.getContext("2d");
+
+canvasSmoke.width = window.innerWidth;
+canvasSmoke.height = window.innerHeight;
+
+let smokes = [];
+for (let i = 0; i < 50; i++) {
+  smokes.push({
+    x: Math.random() * canvasSmoke.width,
+    y: Math.random() * canvasSmoke.height,
+    radius: Math.random() * 40 + 20,
+    alpha: Math.random() * 0.2 + 0.05,
+    speed: Math.random() * 0.2 + 0.1
+  });
+}
+
+function drawSmoke() {
+  ctxSmoke.clearRect(0, 0, canvasSmoke.width, canvasSmoke.height);
+  for (let s of smokes) {
+    ctxSmoke.beginPath();
+    ctxSmoke.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+    ctxSmoke.fillStyle = `rgba(255,255,255,${s.alpha})`;
+    ctxSmoke.fill();
+    s.y -= s.speed;
+    if (s.y + s.radius < 0) {
+      s.y = canvasSmoke.height + s.radius;
+      s.x = Math.random() * canvasSmoke.width;
+    }
+  }
+  requestAnimationFrame(drawSmoke);
+}
+drawSmoke();
+
+window.addEventListener('resize', () => {
+  canvasSmoke.width = window.innerWidth;
+  canvasSmoke.height = window.innerHeight;
+});
+</script>
+<style>
+#smoke {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  filter: blur(8px);
+  mix-blend-mode: screen;
+}
+</style>
+
 </body>
 </html>
