@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🎉 Финальный Пазл</title>
+  <title>🎉 Пазл-продолжение</title>
   <style>
     body {
       margin: 0;
@@ -69,12 +69,26 @@
     }
   </style>
 </head>
-<body>
+<body onclick="startMusic()">
   <h1>Ты молодец! 🎉</h1>
-  <h2>Ты прошла 3 раунда. Остался последний шаг…<br/>Собери пазл — и получишь подарок 🎁</h2>
+  <h2>Ты прошла 3 раунда. Остались ещё задания…<br/>Собери пазл, чтобы двигаться дальше!</h2>
   <div id="puzzle"></div>
 
+  <audio id="bgMusic" loop>
+    <source src="Solis - Quirky Quest.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
+    const audio = document.getElementById("bgMusic");
+    let musicStarted = false;
+    function startMusic() {
+      if (!musicStarted) {
+        audio.play();
+        musicStarted = true;
+      }
+    }
+
     const puzzle = document.getElementById("puzzle");
     const positions = [];
 
@@ -103,6 +117,7 @@
 
     tiles.forEach(tile => {
       tile.addEventListener("click", () => {
+        if (!musicStarted) startMusic();
         if (!selected) {
           selected = tile;
           tile.style.outline = "3px solid #ff4e9b";
@@ -141,10 +156,27 @@
       });
 
       if (isWin) {
+        confettiEffect();
         setTimeout(() => {
-          window.location.href = "http://lera-birthday.com/win";
-        }, 1000);
+          window.location.href = "https://vldshshkn.github.io/CATCH/";
+        }, 3000);
       }
+    }
+
+    function confettiEffect() {
+      const count = 200;
+      const defaults = { origin: { y: 0.7 } };
+      function fire(particleRatio, opts) {
+        confetti(Object.assign({}, defaults, opts, {
+          particleCount: Math.floor(count * particleRatio)
+        }));
+      }
+
+      fire(0.25, { spread: 26, startVelocity: 55 });
+      fire(0.2, { spread: 60 });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+      fire(0.1, { spread: 120, startVelocity: 45 });
     }
   </script>
 </body>
