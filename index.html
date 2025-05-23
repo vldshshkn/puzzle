@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: url('ksksks.png') no-repeat center center fixed; background-size: cover;
+      background: url('sjsjds.png') no-repeat center center fixed; background-size: cover;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -73,7 +73,13 @@
       background: rgba(0, 0, 0, 0.2);
       backdrop-filter: blur(4px);
       border-radius: 20px;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); }
+      100% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
     }
 
     .tile {
@@ -81,12 +87,12 @@
     }
 
     .tile.spin {
-      animation: spinEffect 0.4s ease-in-out;
+      animation: spinTile 0.4s ease-in-out;
     }
 
-    @keyframes spinEffect {
+    @keyframes spinTile {
       0% { transform: rotate(0deg); }
-      50% { transform: rotate(5deg); }
+      50% { transform: rotate(8deg); }
       100% { transform: rotate(0deg); }
     }
 
@@ -109,10 +115,20 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    canvas#stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
 </style>
 </head>
 <body onclick="startMusic()">
-  <h1>✨ Ты молодец! 🎉 ✨</h1>
+  <h1>Ты молодец! 🎉</h1>
   <h2>Ты прошла 3 раунда. Остались ещё задания…<br/>Собери пазл, чтобы двигаться дальше!</h2>
   <div id="puzzle"></div>
 
@@ -171,7 +187,11 @@
           const x2 = tile.dataset.x, y2 = tile.dataset.y;
 
           selected.style.transform = `translate(${x2}px, ${y2}px)`;
+          selected.classList.add('spin');
+          setTimeout(() => selected.classList.remove('spin'), 400);
           tile.style.transform = `translate(${x1}px, ${y1}px)`;
+          tile.classList.add('spin');
+          setTimeout(() => tile.classList.remove('spin'), 400);
 
           selected.dataset.x = x2; selected.dataset.y = y2;
           tile.dataset.x = x1; tile.dataset.y = y1;
@@ -221,5 +241,47 @@
       fire(0.1, { spread: 120, startVelocity: 45 });
     }
   </script>
+
+<canvas id="stars"></canvas>
+<script>
+const starCanvas = document.getElementById('stars');
+const ctx = starCanvas.getContext('2d');
+let width = window.innerWidth;
+let height = window.innerHeight;
+starCanvas.width = width;
+starCanvas.height = height;
+
+let stars = [];
+for (let i = 0; i < 120; i++) {
+  stars.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    r: Math.random() * 1.5 + 0.5,
+    alpha: Math.random(),
+    delta: Math.random() * 0.02
+  });
+}
+
+function animateStars() {
+  ctx.clearRect(0, 0, width, height);
+  for (let s of stars) {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
+    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+    ctx.fill();
+    s.alpha += s.delta;
+    if (s.alpha <= 0 || s.alpha >= 1) s.delta = -s.delta;
+  }
+  requestAnimationFrame(animateStars);
+}
+animateStars();
+window.addEventListener('resize', () => {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  starCanvas.width = width;
+  starCanvas.height = height;
+});
+</script>
+
 </body>
 </html>
