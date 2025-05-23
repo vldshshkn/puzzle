@@ -181,7 +181,40 @@ canvas#stars, canvas#stars2 {
       }
     }
 
-    const puzzle = document.getElementById("puzzle");
+    
+function createSpark(x, y) {
+  for (let i = 0; i < 8; i++) {
+    const spark = document.createElement("div");
+    spark.style.position = "fixed";
+    spark.style.left = x + "px";
+    spark.style.top = y + "px";
+    spark.style.width = "4px";
+    spark.style.height = "4px";
+    spark.style.borderRadius = "50%";
+    spark.style.background = "white";
+    spark.style.boxShadow = "0 0 6px rgba(255,255,255,0.8)";
+    spark.style.zIndex = "9999";
+    spark.style.pointerEvents = "none";
+    spark.style.transition = "transform 0.5s ease-out, opacity 0.5s ease-out";
+
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = Math.random() * 30 + 10;
+    const dx = Math.cos(angle) * distance;
+    const dy = Math.sin(angle) * distance;
+
+    document.body.appendChild(spark);
+
+    requestAnimationFrame(() => {
+      spark.style.transform = `translate(${dx}px, ${dy}px) scale(0.6)`;
+      spark.style.opacity = "0";
+    });
+
+    setTimeout(() => spark.remove(), 500);
+  }
+}
+
+
+const puzzle = document.getElementById("puzzle");
     const positions = [];
 
     for (let y = 0; y < 4; y++) {
@@ -221,9 +254,13 @@ canvas#stars, canvas#stars2 {
           const x2 = tile.dataset.x, y2 = tile.dataset.y;
 
           selected.style.transform = `translate(${x2}px, ${y2}px)`;
+          const rect2 = selected.getBoundingClientRect();
+          createSpark(rect2.left + 50, rect2.top + 50);
           selected.classList.add('glow');
           setTimeout(() => selected.classList.remove('glow'), 400);
           tile.style.transform = `translate(${x1}px, ${y1}px)`;
+          const rect1 = tile.getBoundingClientRect();
+          createSpark(rect1.left + 50, rect1.top + 50);
           tile.classList.add('glow');
           setTimeout(() => tile.classList.remove('glow'), 400);
 
@@ -303,7 +340,7 @@ function animateStars() {
     ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
     ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
     ctx.fill();
-    s.alpha += s.delta;
+    s.alpha += s.delta * 0.3;
     if (s.alpha <= 0 || s.alpha >= 1) s.delta = -s.delta;
   }
   requestAnimationFrame(animateStars);
@@ -343,7 +380,7 @@ function animateSparkles() {
     ctx2.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
     ctx2.fillStyle = `rgba(255,255,255,${s.alpha})`;
     ctx2.fill();
-    s.alpha += s.delta;
+    s.alpha += s.delta * 0.3;
     if (s.alpha > 1 || s.alpha < 0) s.delta = -s.delta;
   }
   requestAnimationFrame(animateSparkles);
