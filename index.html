@@ -68,6 +68,24 @@
       }
     }
   </style>
+
+<style>
+.flash {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: flashAnim 0.4s ease-out forwards;
+  z-index: 999;
+}
+@keyframes flashAnim {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(2); }
+}
+</style>
+
 </head>
 <body onclick="startMusic()">
   <h1>Ты молодец! 🎉</h1>
@@ -89,7 +107,18 @@
       }
     }
 
-    const puzzle = document.getElementById("puzzle");
+    
+function createFlash(x, y) {
+  const flash = document.createElement("div");
+  flash.className = "flash";
+  flash.style.left = x + "px";
+  flash.style.top = y + "px";
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 400);
+}
+
+
+const puzzle = document.getElementById("puzzle");
     const positions = [];
 
     for (let y = 0; y < 4; y++) {
@@ -116,7 +145,8 @@
     let selected = null;
 
     tiles.forEach(tile => {
-      tile.addEventListener("click", () => {
+      tile.addEventListener("click", (e) => {
+        createFlash(e.clientX - 50, e.clientY - 50);
         if (!musicStarted) startMusic();
         if (!selected) {
           selected = tile;
