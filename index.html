@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,12 +6,13 @@
   <title>🎉 Пазл-продолжение</title>
   <style>
     body {
-  height: 100vh;
-  overflow: hidden;
+      height: 100vh;
+      overflow: hidden;
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: url('sjsjds.png') no-repeat center center fixed; background-size: cover;
+      background: url('sjsjds.png') no-repeat center center fixed;
+      background-size: cover;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -22,19 +22,19 @@
     }
 
     h1 {
-  color: #ffffff !important;
-  text-shadow: 0 0 12px rgba(255,255,255,0.9);
+      color: #ffffff !important;
+      text-shadow: 0 0 12px rgba(255,255,255,0.9);
       font-size: 32px;
       margin: 10px;
-      color: #ff4e9b;
     }
 
     h2 {
       font-size: 20px;
       font-weight: 400;
       margin-bottom: 30px;
-      color: #444;
+      color: rgba(255,255,255,0.85);
       max-width: 90%;
+      text-shadow: 0 0 6px rgba(0,0,0,0.4);
     }
 
     #puzzle {
@@ -42,91 +42,56 @@
       height: 400px;
       display: flex;
       flex-wrap: wrap;
-      border: 4px solid #ff7ecb;
+      border: 4px solid rgba(255, 255, 255, 0.7);
       position: relative;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      background: #fff;
-      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      animation: glow 6s infinite alternate;
     }
 
     .tile {
       width: 100px;
       height: 100px;
-      background-image: url("dog_focused_puzzle.jpg");
+      background-image: url("jsjss.png");
       background-size: 400px 400px;
       position: absolute;
       cursor: pointer;
-      transition: transform 0.3s ease;
-      border-radius: 6px;
-    }
-
-    @media (max-width: 480px) {
-      #puzzle {
-        transform: scale(0.9);
-      }
-      h1 {
-  color: #ffffff !important;
-  text-shadow: 0 0 12px rgba(255,255,255,0.9);
-        font-size: 24px;
-      }
-      h2 {
-        font-size: 16px;
-      }
-    }
-  
-    #puzzle {
-      border: 4px solid rgba(255, 255, 255, 0.7);
-      background: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(4px);
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-      animation: glow 6s infinite alternate;
-    }
-
-    
-@keyframes glow {
-  0% { box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5), 0 0 40px 10px #ff6ec4; }
-  25% { box-shadow: 0 0 25px 6px rgba(255, 255, 255, 0.6), 0 0 45px 12px #7873f5; }
-  50% { box-shadow: 0 0 30px 8px rgba(255, 255, 255, 0.8), 0 0 50px 14px #4facfe; }
-  75% { box-shadow: 0 0 25px 6px rgba(255, 255, 255, 0.6), 0 0 45px 12px #43e97b; }
-  100% { box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5), 0 0 40px 10px #ff6ec4; }
-}
-
-      0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); }
-      100% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
-    }
-
-    .tile {
       transition: transform 0.4s ease-in-out;
+      border-radius: 6px;
     }
 
     .tile.glow {
       animation: glowTile 0.4s ease-in-out;
     }
 
-    
-@keyframes glowTile {
-  0% { box-shadow: 0 0 0px rgba(255,255,255,0); }
-  50% { box-shadow: 0 0 15px rgba(255,255,255,0.8); }
-  100% { box-shadow: 0 0 0px rgba(255,255,255,0); }
-}
+    @media (max-width: 480px) {
+      #puzzle {
+        transform: scale(0.9);
+      }
 
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(8deg); }
-      100% { transform: rotate(0deg); }
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 16px;
+      }
     }
 
-    h1 {
-  color: #ffffff !important;
-  text-shadow: 0 0 12px rgba(255,255,255,0.9);
-      color: #ffffff !important;
-  text-shadow: 0 0 12px rgba(255,255,255,0.9);
-      text-shadow: 0 0 10px rgba(255,255,255,0.7);
+    @keyframes glow {
+      0% { box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5), 0 0 40px 10px #ff6ec4; }
+      25% { box-shadow: 0 0 25px 6px rgba(255, 255, 255, 0.6), 0 0 45px 12px #7873f5; }
+      50% { box-shadow: 0 0 30px 8px rgba(255, 255, 255, 0.8), 0 0 50px 14px #4facfe; }
+      75% { box-shadow: 0 0 25px 6px rgba(255, 255, 255, 0.6), 0 0 45px 12px #43e97b; }
+      100% { box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5), 0 0 40px 10px #ff6ec4; }
     }
 
-    h2 {
-      color: rgba(255,255,255,0.85);
-      text-shadow: 0 0 6px rgba(0,0,0,0.4);
+    @keyframes glowTile {
+      0% { box-shadow: 0 0 0px rgba(255,255,255,0); }
+      50% { box-shadow: 0 0 15px rgba(255,255,255,0.8); }
+      100% { box-shadow: 0 0 0px rgba(255,255,255,0); }
     }
 
     h1, h2 {
@@ -138,36 +103,37 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    canvas#stars {
+    canvas#stars, canvas#stars2 {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
       z-index: 1;
     }
 
-
-canvas#stars, canvas#stars2 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1;
-}
-
-</style>
+    #smoke {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      opacity: 0.4;
+      filter: blur(8px);
+      mix-blend-mode: screen;
+    }
+  </style>
 </head>
 <body onclick="startMusic()">
   <h1>Ты молодец! 🎉</h1>
   <h2>Ты прошла 3 раунда. Остались ещё задания…<br/>Собери пазл, чтобы двигаться дальше!</h2>
-  
-<audio id="moveSound">
-  <source src="OOO.mp3" type="audio/wav">
-</audio>
+
+  <audio id="moveSound">
+    <source src="OOO.mp3" type="audio/wav">
+  </audio>
 
   <div id="puzzle"></div>
 
@@ -186,40 +152,38 @@ canvas#stars, canvas#stars2 {
       }
     }
 
-    
-function createSpark(x, y) {
-  for (let i = 0; i < 8; i++) {
-    const spark = document.createElement("div");
-    spark.style.position = "fixed";
-    spark.style.left = x + "px";
-    spark.style.top = y + "px";
-    spark.style.width = "4px";
-    spark.style.height = "4px";
-    spark.style.borderRadius = "50%";
-    spark.style.background = "white";
-    spark.style.boxShadow = "0 0 6px rgba(255,255,255,0.8)";
-    spark.style.zIndex = "9999";
-    spark.style.pointerEvents = "none";
-    spark.style.transition = "transform 0.5s ease-out, opacity 0.5s ease-out";
+    function createSpark(x, y) {
+      for (let i = 0; i < 8; i++) {
+        const spark = document.createElement("div");
+        spark.style.position = "fixed";
+        spark.style.left = x + "px";
+        spark.style.top = y + "px";
+        spark.style.width = "4px";
+        spark.style.height = "4px";
+        spark.style.borderRadius = "50%";
+        spark.style.background = "white";
+        spark.style.boxShadow = "0 0 6px rgba(255,255,255,0.8)";
+        spark.style.zIndex = "9999";
+        spark.style.pointerEvents = "none";
+        spark.style.transition = "transform 0.5s ease-out, opacity 0.5s ease-out";
 
-    const angle = Math.random() * 2 * Math.PI;
-    const distance = Math.random() * 30 + 10;
-    const dx = Math.cos(angle) * distance;
-    const dy = Math.sin(angle) * distance;
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 30 + 10;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance;
 
-    document.body.appendChild(spark);
+        document.body.appendChild(spark);
 
-    requestAnimationFrame(() => {
-      spark.style.transform = `translate(${dx}px, ${dy}px) scale(0.6)`;
-      spark.style.opacity = "0";
-    });
+        requestAnimationFrame(() => {
+          spark.style.transform = `translate(${dx}px, ${dy}px) scale(0.6)`;
+          spark.style.opacity = "0";
+        });
 
-    setTimeout(() => spark.remove(), 500);
-  }
-}
+        setTimeout(() => spark.remove(), 500);
+      }
+    }
 
-
-const puzzle = document.getElementById("puzzle");
+    const puzzle = document.getElementById("puzzle");
     const positions = [];
 
     for (let y = 0; y < 4; y++) {
@@ -259,14 +223,13 @@ const puzzle = document.getElementById("puzzle");
           const x2 = tile.dataset.x, y2 = tile.dataset.y;
 
           selected.style.transform = `translate(${x2}px, ${y2}px)`;
-          const rect2 = selected.getBoundingClientRect();
-          createSpark(rect2.left + 50, rect2.top + 50);
+          createSpark(selected.getBoundingClientRect().left + 50, selected.getBoundingClientRect().top + 50);
           document.getElementById('moveSound').play();
           selected.classList.add('glow');
           setTimeout(() => selected.classList.remove('glow'), 400);
+
           tile.style.transform = `translate(${x1}px, ${y1}px)`;
-          const rect1 = tile.getBoundingClientRect();
-          createSpark(rect1.left + 50, rect1.top + 50);
+          createSpark(tile.getBoundingClientRect().left + 50, tile.getBoundingClientRect().top + 50);
           document.getElementById('moveSound').play();
           tile.classList.add('glow');
           setTimeout(() => tile.classList.remove('glow'), 400);
@@ -320,137 +283,120 @@ const puzzle = document.getElementById("puzzle");
     }
   </script>
 
-<canvas id="stars"></canvas>
-<script>
-const starCanvas = document.getElementById('stars');
-const ctx = starCanvas.getContext('2d');
-let width = window.innerWidth;
-let height = window.innerHeight;
-starCanvas.width = width;
-starCanvas.height = height;
+  <canvas id="stars"></canvas>
+  <script>
+    const starCanvas = document.getElementById('stars');
+    const ctx = starCanvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    starCanvas.width = width;
+    starCanvas.height = height;
 
-let stars = [];
-for (let i = 0; i < 120; i++) {
-  stars.push({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    r: Math.random() * 1.5 + 0.5,
-    alpha: Math.random(),
-    delta: Math.random() * 0.02
-  });
-}
-
-function animateStars() {
-  ctx.clearRect(0, 0, width, height);
-  for (let s of stars) {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
-    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-    ctx.fill();
-    s.alpha += s.delta * 0.3;
-    if (s.alpha <= 0 || s.alpha >= 1) s.delta = -s.delta;
-  }
-  requestAnimationFrame(animateStars);
-}
-animateStars();
-window.addEventListener('resize', () => {
-  width = window.innerWidth;
-  height = window.innerHeight;
-  starCanvas.width = width;
-  starCanvas.height = height;
-});
-</script>
-
-
-<canvas id="stars2"></canvas>
-<script>
-const canvas2 = document.getElementById('stars2');
-const ctx2 = canvas2.getContext('2d');
-canvas2.width = window.innerWidth;
-canvas2.height = window.innerHeight;
-
-let sparkles = [];
-for (let i = 0; i < 40; i++) {
-  sparkles.push({
-    x: Math.random() * canvas2.width,
-    y: Math.random() * canvas2.height,
-    r: Math.random() * 2 + 1,
-    alpha: 0,
-    delta: Math.random() * 0.05 + 0.01
-  });
-}
-
-function animateSparkles() {
-  ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-  for (let s of sparkles) {
-    ctx2.beginPath();
-    ctx2.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
-    ctx2.fillStyle = `rgba(255,255,255,${s.alpha})`;
-    ctx2.fill();
-    s.alpha += s.delta * 0.3;
-    if (s.alpha > 1 || s.alpha < 0) s.delta = -s.delta;
-  }
-  requestAnimationFrame(animateSparkles);
-}
-animateSparkles();
-</script>
-
-
-<canvas id="smoke"></canvas>
-<script>
-const canvasSmoke = document.getElementById("smoke");
-const ctxSmoke = canvasSmoke.getContext("2d");
-
-canvasSmoke.width = window.innerWidth;
-canvasSmoke.height = window.innerHeight;
-
-let smokes = [];
-for (let i = 0; i < 50; i++) {
-  smokes.push({
-    x: Math.random() * canvasSmoke.width,
-    y: Math.random() * canvasSmoke.height,
-    radius: Math.random() * 40 + 20,
-    alpha: Math.random() * 0.2 + 0.05,
-    speed: Math.random() * 0.2 + 0.1
-  });
-}
-
-function drawSmoke() {
-  ctxSmoke.clearRect(0, 0, canvasSmoke.width, canvasSmoke.height);
-  for (let s of smokes) {
-    ctxSmoke.beginPath();
-    ctxSmoke.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
-    ctxSmoke.fillStyle = `rgba(255,255,255,${s.alpha})`;
-    ctxSmoke.fill();
-    s.y -= s.speed;
-    if (s.y + s.radius < 0) {
-      s.y = canvasSmoke.height + s.radius;
-      s.x = Math.random() * canvasSmoke.width;
+    let stars = [];
+    for (let i = 0; i < 120; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 1.5 + 0.5,
+        alpha: Math.random(),
+        delta: Math.random() * 0.02
+      });
     }
-  }
-  requestAnimationFrame(drawSmoke);
-}
-drawSmoke();
 
-window.addEventListener('resize', () => {
-  canvasSmoke.width = window.innerWidth;
-  canvasSmoke.height = window.innerHeight;
-});
-</script>
-<style>
-#smoke {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
-  opacity: 0.4;
-  filter: blur(8px);
-  mix-blend-mode: screen;
-}
-</style>
+    function animateStars() {
+      ctx.clearRect(0, 0, width, height);
+      for (let s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.fill();
+        s.alpha += s.delta * 0.3;
+        if (s.alpha <= 0 || s.alpha >= 1) s.delta = -s.delta;
+      }
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      starCanvas.width = width;
+      starCanvas.height = height;
+    });
+  </script>
 
+  <canvas id="stars2"></canvas>
+  <script>
+    const canvas2 = document.getElementById('stars2');
+    const ctx2 = canvas2.getContext('2d');
+    canvas2.width = window.innerWidth;
+    canvas2.height = window.innerHeight;
+
+    let sparkles = [];
+    for (let i = 0; i < 40; i++) {
+      sparkles.push({
+        x: Math.random() * canvas2.width,
+        y: Math.random() * canvas2.height,
+        r: Math.random() * 2 + 1,
+        alpha: 0,
+        delta: Math.random() * 0.05 + 0.01
+      });
+    }
+
+    function animateSparkles() {
+      ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+      for (let s of sparkles) {
+        ctx2.beginPath();
+        ctx2.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
+        ctx2.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx2.fill();
+        s.alpha += s.delta * 0.3;
+        if (s.alpha > 1 || s.alpha < 0) s.delta = -s.delta;
+      }
+      requestAnimationFrame(animateSparkles);
+    }
+    animateSparkles();
+  </script>
+
+  <canvas id="smoke"></canvas>
+  <script>
+    const canvasSmoke = document.getElementById("smoke");
+    const ctxSmoke = canvasSmoke.getContext("2d");
+
+    canvasSmoke.width = window.innerWidth;
+    canvasSmoke.height = window.innerHeight;
+
+    let smokes = [];
+    for (let i = 0; i < 50; i++) {
+      smokes.push({
+        x: Math.random() * canvasSmoke.width,
+        y: Math.random() * canvasSmoke.height,
+        radius: Math.random() * 40 + 20,
+        alpha: Math.random() * 0.2 + 0.05,
+        speed: Math.random() * 0.2 + 0.1
+      });
+    }
+
+    function drawSmoke() {
+      ctxSmoke.clearRect(0, 0, canvasSmoke.width, canvasSmoke.height);
+      for (let s of smokes) {
+        ctxSmoke.beginPath();
+        ctxSmoke.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+        ctxSmoke.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctxSmoke.fill();
+        s.y -= s.speed;
+        if (s.y + s.radius < 0) {
+          s.y = canvasSmoke.height + s.radius;
+          s.x = Math.random() * canvasSmoke.width;
+        }
+      }
+      requestAnimationFrame(drawSmoke);
+    }
+    drawSmoke();
+
+    window.addEventListener('resize', () => {
+      canvasSmoke.width = window.innerWidth;
+      canvasSmoke.height = window.innerHeight;
+    });
+  </script>
 </body>
 </html>
