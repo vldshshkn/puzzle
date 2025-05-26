@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🎉 Пазл-продолжение</title>
-  <link rel="preload" as="image" href="ueue.png">
   <style>
     body {
       height: 100vh;
@@ -12,7 +11,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #000 url('ueue.png') no-repeat center center fixed;
+      background: url('ueue.png') no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
       display: flex;
@@ -21,6 +20,14 @@
       justify-content: center;
       text-align: center;
     }
+    body.hidden {
+      visibility: hidden;
+      background: #000;
+    }
+    body.visible {
+      visibility: visible;
+    }
+
 
     h1 {
       color: #ffffff !important;
@@ -132,7 +139,7 @@
     }
   </style>
 </head>
-<body onclick="startMusic()">
+<body class="hidden" onclick="startMusic()">
   
   
 
@@ -403,5 +410,16 @@
       canvasSmoke.height = window.innerHeight;
     });
   </script>
+
+<script>
+  // Предзагрузка фонового изображения
+  const bg = new Image();
+  bg.src = 'ueue.png';
+  bg.onload = () => {
+    document.body.classList.remove('hidden');
+    document.body.classList.add('visible');
+  };
+</script>
+
 </body>
 </html>
